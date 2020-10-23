@@ -50,25 +50,27 @@ module.exports = function(csvArray) {
 
       // Add currentLine value
       if (index == 0) {
-        obj['userId'] = 'S' + currentLine[j];
+        obj['traits']['id_sedona'] = currentLine[j];
       } else if (index == 1) {
         if (currentLine[j].indexOf('JC') > -1) {
-          obj['traits']['jeffclub'] = 1;
+          obj['traits']['jeffClub'] = 1;
         } else {
-          obj['traits']['jeffclub'] = 0;
+          obj['traits']['jeffClub'] = 0;
         }
         if (currentLine[j].indexOf('VEL') > -1) {
           obj['traits']['vel_customer'] = 1;
         }
       } else if (index == 2) {
-        obj['traits']['first_name'] = currentLine[j];
+        obj['traits']['firstName'] = currentLine[j];
       } else if (index == 3) {
-        obj['traits']['last_name'] = currentLine[j];
+        obj['traits']['lastName'] = currentLine[j];
       } else if (index == 4) {
         if (currentLine[j] == 'mr') {
           obj['traits']['gender'] = 'm';
-        } else if (currentLine[j] == 'mm' || currentLine[j] == 'ms') {
+          obj['traits']['title'] = 'Monsieur';
+        } else if (currentLine[j] == 'mm' || currentLine[j] == 'ms' ) {
           obj['traits']['gender'] = 'mme';
+          obj['traits']['title'] = 'Madame';            
         }
       } else if (index == 5) {
         obj['traits']['postal_code'] = currentLine[j];
@@ -89,6 +91,7 @@ module.exports = function(csvArray) {
         }
       } else if (index == 8) {
         obj['traits']['email'] = currentLine[j];
+        obj['userId'] = btoa(currentLine[j]); //user id = email encoded in base 64
       } else if (index == 9) {
         var jeffclub_date = currentLine[importColumnIndexMapping[index + 1]];
         if (currentLine[j] == '') {
@@ -105,24 +108,24 @@ module.exports = function(csvArray) {
           obj['traits']['updated_at'] = currentLine[j];
         }
       } else if (index == 10) {
+
       } else if (index == 11) {
-        // obj["traits"]["last_connexion_vel"] = currentLine[j];
+        obj['traits']['last_connexion_vel'] = currentLine[j];
       } else if (index == 12) {
-        // obj["traits"]["last_connexion_jeffclub"] = currentLine[j];
+        obj['traits']['last_connexion_jeffclub'] = currentLine[j];
       } else if (index == 13) {
         obj['traits']['optin_web_newsletter'] = currentLine[j];
-        obj['traits']['date_optin_web_newsletter'] =
-          currentLine[importColumnIndexMapping[9]];
+        obj['traits']['date_optin_web_newsletter'] = currentLine[importColumnIndexMapping[9]];
       } else if (index == 14) {
         obj['traits']['optin_jeffclub_newsletter'] = currentLine[j];
-        obj['traits']['date_optin_jeffclub_newsletter'] =
-          currentLine[importColumnIndexMapping[10]];
-      } else if (index == 15) {
+        obj['traits']['date_optin_jeffclub_newsletter'] = currentLine[importColumnIndexMapping[10]];
+      }  else if (index == 15) {
         obj['traits']['birthday'] = currentLine[j];
-      } else if (index == 16) {
+      }  else if (index == 16) {
         obj['traits']['prefered_store_code'] = currentLine[j];
       }
       obj['traits']['proximis_account_activated'] = 0;
+      obj['traits']['origin'] = 'sedona';
     }
     jsonArr.push(obj);
   }
