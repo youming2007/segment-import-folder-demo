@@ -11,12 +11,20 @@ var errorFolder = './data/error/';
 
 var writeKey = 'Q6CHDsH6KK7CS1K24rMUjXNTpibNCZ0w';
 
+// Create folder if not existed
+if (!fs.existsSync(successFolder)){
+  fs.mkdirSync(successFolder);
+}
+if (!fs.existsSync(errorFolder)){
+  fs.mkdirSync(errorFolder);
+}
+
 fs.readdirSync(inputFolder).forEach(file => {
   logger.log({
     level: 'info',
     message: `Start processing file: ${file}`
   });
-  var parser = parse({ columns: false }, function(err, records) {
+  var parser = parse({ columns: false, delimiter: ';' }, function(err, records) {
     if (err) {
       logger.log({
         level: 'error',

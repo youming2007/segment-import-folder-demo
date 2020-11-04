@@ -114,15 +114,25 @@ module.exports = function(csvArray) {
       } else if (index == 12) {
         obj['traits']['last_connexion_jeffclub'] = currentLine[j];
       } else if (index == 13) {
-        obj['traits']['optin_web_newsletter'] = currentLine[j];
+        if(currentLine[j] == 'Oui'){
+          obj['traits']['optin_web_newsletter'] = 1;
+        }
+        else{
+          obj['traits']['optin_web_newsletter'] = 0;
+        }
         obj['traits']['date_optin_web_newsletter'] = currentLine[importColumnIndexMapping[9]];
       } else if (index == 14) {
-        obj['traits']['optin_jeffclub_newsletter'] = currentLine[j];
+        if(currentLine[j] == 'Oui'){
+          obj['traits']['optin_jeffclub_newsletter'] = 1;
+        }
+        else{
+            obj['traits']['optin_jeffclub_newsletter'] = 0;
+        }
         obj['traits']['date_optin_jeffclub_newsletter'] = currentLine[importColumnIndexMapping[10]];
       }  else if (index == 15) {
         obj['traits']['birthday'] = currentLine[j];
       }  else if (index == 16) {
-        obj['traits']['prefered_store_code'] = currentLine[j];
+        obj['traits']['preferred_store_code'] = currentLine[j];
       }
       obj['traits']['proximis_account_activated'] = 0;
       obj['traits']['origin'] = 'sedona';
