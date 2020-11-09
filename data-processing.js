@@ -1,30 +1,29 @@
 module.exports = function(csvArray) {
-  var headers = csvArray[0][0];
-  headers = headers.replace(/\s+/g, '_');
-  headers = headers.split(';');
+  var btoa = require('btoa');
 
+  var headers = csvArray[0];
   var finalJson = {};
   var jsonArr = [];
   var jsonString;
 
   var dataMappingKey = [
-    'Code_client_ou_identifiant_client', // 0
-    'Centre_de_cout', // 1
+    'Code client ou identifiant client', // 0
+    'Centre de cout', // 1
     'Prénom', // 2
     'Nom', // 3
     'Titre', // 5
-    'Code_Postal', // 9
-    'Pays',
-    'Téléphone',
-    'E-mail',
-    'Date_de_création_compte_VEL',
-    'Date_de_création_compte_jeff_club',
-    'Date_de_dernière_connexion_VEL',
-    'Date_de_dernière_connexion_jeff_club',
-    'inscription_newsletter_VEL',
-    'inscription_newsletter_jeff_club',
-    'Date_de_naissance',
-    'Code_client_du_magasin_préféré_pour_les_clients_Jeff_club'
+    'Code Postal', // 9
+    'Pays', //10
+    'Téléphone',//11
+    'E-mail',//12
+    'Date de création compte VEL',//13
+    'Date de création compte jeff club',//14
+    'Date de dernière connexion VEL',//15
+    'Date de dernière connexion jeff club',//16
+    'inscription newsletter VEL',//17
+    'inscription newsletter Jeff Club',//18
+    'Date de naissance',//19
+    'Code client du magasin préféré pour les clients Jeff club'//20
   ];
 
   var importColumnIndexMapping = [];
@@ -32,10 +31,9 @@ module.exports = function(csvArray) {
     var index = headers.indexOf(dataMappingKey[i]);
     importColumnIndexMapping.push(index);
   }
-
   for (var i = 1; i < csvArray.length; i++) {
     var obj = {};
-    var currentLine = csvArray[i][0].split(';');
+    var currentLine = csvArray[i];//.split(';');
     for (var j = 0; j < headers.length; j++) {
       var index = importColumnIndexMapping.indexOf(j);
       if (index == -1) {
@@ -47,7 +45,6 @@ module.exports = function(csvArray) {
       if (!obj['traits']) {
         obj['traits'] = {};
       }
-
       // Add currentLine value
       if (index == 0) {
         obj['traits']['id_sedona'] = currentLine[j];
@@ -137,10 +134,10 @@ module.exports = function(csvArray) {
       obj['traits']['proximis_account_activated'] = 0;
       obj['traits']['origin'] = 'sedona';
     }
+
     jsonArr.push(obj);
   }
   finalJson['batch'] = jsonArr;
-  jsonString = JSON.stringify(finalJson, null, 2);
-
+  jsonString = JSON.stringify(finalJson);
   return jsonString;
 };

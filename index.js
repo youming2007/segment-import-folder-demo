@@ -9,7 +9,8 @@ var inputFolder = './data/input/';
 var successFolder = './data/success/';
 var errorFolder = './data/error/';
 
-var writeKey = 'Q6CHDsH6KK7CS1K24rMUjXNTpibNCZ0w';
+var writeKey = 'Q6CHDsH6KK7CS1K24rMUjXNTpibNCZ0w'; //workspace clever : JdB Test
+//var writeKey = 'eeeyHHV6Ntgzz23dBdZWqcV38SPiQRQF'; // workspace Jeff De Bruges (source Proximis Test)
 
 // Create folder if not existed
 if (!fs.existsSync(successFolder)){
@@ -24,6 +25,7 @@ fs.readdirSync(inputFolder).forEach(file => {
     level: 'info',
     message: `Start processing file: ${file}`
   });
+  console.log(`Start processing file: ${file}`);
   var parser = parse({ columns: false, delimiter: ';' }, function(err, records) {
     if (err) {
       logger.log({
@@ -43,7 +45,9 @@ fs.readdirSync(inputFolder).forEach(file => {
         }
       })
       .then(res => {
-        // Move to success folder
+        //console.log(res)
+        console.log(`Segment api call for the file : ${file} / status : ${res.status}`)
+        // Move to success folder        
         fs.rename(inputFolder + file, successFolder + file, err => {
           if (err) {
             logger.log({
@@ -56,6 +60,7 @@ fs.readdirSync(inputFolder).forEach(file => {
           level: 'info',
           message: `End processing file: ${file}`
         });
+        console.log(`End processing file: ${file}`);
       })
       .catch(error => {
         // Move to error folder
