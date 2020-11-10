@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.2.0",
     "axios": "^0.20.0",
     "btoa": "^1.2.1",
     "btoa-atob": "^0.1.2",
