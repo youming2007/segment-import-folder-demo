@@ -25,7 +25,7 @@ var files = fs.readdirSync(inputFolder);
 
 async.eachLimit(
   files,
-  3,
+  3, // TODO: Please change this number for parallel processing
   function(file, callback) {
     logger.log({
       level: 'info',
